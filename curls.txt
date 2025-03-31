@@ -1,0 +1,42 @@
+Login para el usuario rector con la contraseña test2day
+curl --request POST \
+  --url http://localhost:8080/api/v1/auth/login \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/11.0.0' \
+  --data '{"username":"rector",
+"password":"test2day"}'
+
+Creacion de un estudiante, la contraseña de este estudiante sera test2day
+curl --request POST \
+  --url http://localhost:8080/api/v1/rector/students/estudiante3 \
+  --header 'User-Agent: insomnia/11.0.0'
+
+Genera un reporte pdf para el estudiante con id
+curl --request GET \
+  --url http://localhost:8080/api/v1/report/student/1 \
+  --header 'User-Agent: insomnia/11.0.0'
+
+Retorna la lista de estudiantes
+curl --request GET \
+  --url http://localhost:8080/api/v1/rector/students \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/11.0.0'
+
+Retorna la lista de estudiantes con sus califcaciones
+curl --request GET \
+  --url http://localhost:8080/api/v1/rector/result \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/11.0.0'
+
+Retorna un estudiante con sus califcaciones
+curl --request GET \
+  --url http://localhost:8080/api/v1/result/2 \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/11.0.0'
+
+Genera el reporte pdf global de todos los estudiantes
+curl --request GET \
+  --url http://localhost:8080/api/v1/rector/report/global \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/11.0.0'
+
