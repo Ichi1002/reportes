@@ -24,8 +24,6 @@ import java.util.stream.Collectors;
         //todo añadir propiedad unique
         private String username;
         @JsonIgnore
-        private boolean hasResult;
-        @JsonIgnore
         private String password;
         @ManyToMany(fetch = FetchType.EAGER)
         private Set<RoleEntity> roles = new HashSet<>();
@@ -35,7 +33,6 @@ import java.util.stream.Collectors;
         public User toEntity(){
             return User.builder()
                     .username(this.username)
-                    //.report()//todo
                     .rol(this.roles.stream().map(RoleEntity::toDomain).collect(Collectors.toSet()))
                     .build();
         }

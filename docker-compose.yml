@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  app:
+    image: 'spring/reportes'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=compose-postgres
+      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+    ports:
+      - 8080:8080
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=compose-postgres
+      - POSTGRES_PASSWORD=compose-postgres
+    ports:
+      - 5432:5432

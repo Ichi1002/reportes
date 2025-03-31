@@ -8,7 +8,7 @@
 SELECT u.username,
        AVG(ge.grade) AS average,
        (SELECT AVG(ge2.grade)
-        FROM grades_entity ge2
+        FROM grade ge2
         INNER JOIN users u2 ON u2.id = ge2.user_id
         INNER JOIN users_roles ur2 ON ur2.user_entity_id = u2.id
         INNER JOIN roles r2 ON r2.id = ur2.roles_id
@@ -16,7 +16,7 @@ SELECT u.username,
 FROM users u
 INNER JOIN users_roles ur ON ur.user_entity_id = u.id
 INNER JOIN roles r ON r.id = ur.roles_id
-INNER JOIN grades_entity ge ON ge.user_id = u.id
+INNER JOIN grade ge ON ge.user_id = u.id
 WHERE r.name NOT IN ('RECTOR')
 GROUP BY u.username;]]>
     </queryString>

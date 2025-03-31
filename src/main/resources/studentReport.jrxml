@@ -6,10 +6,10 @@
     <queryString>
         <![CDATA[select c.course, g.grade, u.username ,
                     (SELECT AVG(g1.grade)
-                    FROM grades_entity g1
+                    FROM grade g1
                     WHERE g1.user_id = $P{id} ) AS average
-                 from grades_entity g
-                 inner join course_entity c on c.id = g.course_id
+                 from grade g
+                 inner join course c on c.id = g.course_id
                  inner join users u on u.id = g.user_id
                  where user_id = $P{id}]]>
     </queryString>

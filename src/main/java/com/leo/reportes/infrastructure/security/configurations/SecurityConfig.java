@@ -40,7 +40,7 @@ public class SecurityConfig {
                 csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/v1/save", "/api/v1/login", "/api/v1/refreshToken","/swagger-ui/index.html").permitAll()
+                                .requestMatchers( "/api/v1/auth/login","/swagger-ui/index.html").permitAll()
                                 .requestMatchers("/api/v1/**").authenticated()
                 )
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->

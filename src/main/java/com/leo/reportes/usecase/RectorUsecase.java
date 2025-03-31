@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -24,8 +25,11 @@ public class RectorUsecase implements RectorGateway {
 
 
     @Override
-    public List<UserEntity> getAllStudents() {
-        return userRepository.findAllStudents(2);
+    public List<String> getAllStudents() {
+        return userRepository.findAllStudents(2)
+                .stream()
+                .map(UserEntity::getUsername)
+                .collect(Collectors.toList());
     }
 
     @Override
