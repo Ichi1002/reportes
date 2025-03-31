@@ -2,6 +2,7 @@ package com.leo.reportes.infrastructure.security.helpers;
 
 import com.leo.reportes.infrastructure.models.UserEntity;
 import com.leo.reportes.infrastructure.models.RoleEntity;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,11 +15,15 @@ public class CustomUserDetails extends UserEntity implements UserDetails {
 
     private String username;
     private String password;
+
+    private Long id;
     Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(UserEntity byUsername) {
         this.username = byUsername.getUsername();
         this.password= byUsername.getPassword();
+        this.id=byUsername.getId();
+
         List<GrantedAuthority> auths = new ArrayList<>();
 
         for(RoleEntity role : byUsername.getRoles()){
@@ -41,6 +46,11 @@ public class CustomUserDetails extends UserEntity implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public long getId() {
+        return id;
     }
 
     @Override

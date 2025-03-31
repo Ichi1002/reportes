@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
 
     private final StudentGateway studentGateway;
-    //todo validar con el id del estudiante
-    @PreAuthorize("hasAuthority('STUDENT')")
+    @PreAuthorize("hasAuthority('STUDENT')  and #id == authentication.principal.id")
     @GetMapping("/report/student/{id}")
     public ResponseEntity<byte[]> getStudentReport(@PathVariable long id) {
         HttpHeaders headers = new HttpHeaders();
@@ -31,9 +30,9 @@ public class StudentController {
                 (studentGateway.generateReport(id), headers, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('STUDENT')")
     @GetMapping("/result/{id}")
-    public ResponseEntity<User> getStudentResult(@PathVariable long id) {
+    @PreAuthorize("hasAuthority('STUDENT')  and #id == authentication.principal.id")
+    public ResponseEntity<User> getStudentResult(@PathVariable Long id) {
         return new ResponseEntity<>
                 (studentGateway.generateResult(id), HttpStatus.OK);
     }
