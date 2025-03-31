@@ -8,7 +8,6 @@ import java.util.List;
 public interface RectorGateway {
     List<UserEntity> getAllStudents();
     User addStudent(String studentName);
-    List<User> getAllReports();
     List<User> getAllResults();
     byte[] generateGlobalReport();
 }

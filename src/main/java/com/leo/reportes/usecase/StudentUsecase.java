@@ -6,6 +6,7 @@ import com.leo.reportes.domain.models.User;
 import com.leo.reportes.domain.port.CourseRepository;
 import com.leo.reportes.domain.port.GradesRepository;
 import com.leo.reportes.domain.port.UserRepository;
+import com.leo.reportes.infrastructure.exceptions.UserNotFoundException;
 import com.leo.reportes.infrastructure.models.UserEntity;
 import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.JRException;
@@ -28,10 +29,13 @@ public class StudentUsecase implements StudentGateway {
     private final GradesRepository gradesRepository;
     private final UserRepository userRepository;
 
+    private static final String USERNOTFOUND = "Usuario no encontrado";
     @Override
     @Transactional
     public byte[] generateReport(long id) {
-        var userEntity = userRepository.findById(id);
+        var userEntity = userRepository.findById(id).orElseThrow(
+                ()->new UserNotFoundException(USERNOTFOUND)
+        );
         if(!gradesRepository.existsGrades(userEntity)){
         Map<String,Double> gradesMap = new HashMap<>();
         courseRepository.getAllCourses().forEach(course ->{
@@ -53,7 +57,9 @@ public class StudentUsecase implements StudentGateway {
     @Override
     public User generateResult(long id) {
         List<Grade> gradeUserList = new ArrayList<>();
-        UserEntity userEntity = userRepository.findById(id);
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(
+                ()->new UserNotFoundException(USERNOTFOUND)
+        );
         gradesRepository.findGradesByUserId(userEntity).forEach(grades -> {
             Grade grade = Grade.builder()
                     .courseName(grades.getCourseName())

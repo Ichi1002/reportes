@@ -54,7 +54,6 @@ public class GradesRepositoryImpl implements GradesRepository {
     @Override
     public JasperPrint generateReport(long id) {
         Map<String, Object> empParams = new HashMap<String, Object>();
-        empParams.put("CompanyName", "TechGeekNext");
         empParams.put("id", id);
         try {
             File file = ResourceUtils.getFile("classpath:studentReport.jrxml");

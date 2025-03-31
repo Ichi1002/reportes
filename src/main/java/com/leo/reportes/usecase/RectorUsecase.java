@@ -3,7 +3,6 @@ package com.leo.reportes.usecase;
 import com.leo.reportes.domain.gateway.RectorGateway;
 import com.leo.reportes.domain.models.Grade;
 import com.leo.reportes.domain.models.User;
-import com.leo.reportes.domain.port.CourseRepository;
 import com.leo.reportes.domain.port.GradesRepository;
 import com.leo.reportes.infrastructure.models.UserEntity;
 import com.leo.reportes.domain.port.UserRepository;
@@ -13,18 +12,14 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
 public class RectorUsecase implements RectorGateway {
 
     private final UserRepository userRepository;
-    private final CourseRepository courseRepository;
     private final GradesRepository gradesRepository;
 
 
@@ -40,11 +35,6 @@ public class RectorUsecase implements RectorGateway {
                 .build();
          return  userRepository.addStudent(user);
 
-    }
-
-    @Override
-    public List<User> getAllReports() {
-        return List.of();
     }
 
     @Override
