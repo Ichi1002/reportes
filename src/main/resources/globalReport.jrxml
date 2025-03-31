@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Simple_Blue_3" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4dd32b21-0b76-47b8-a70b-d1d02deb09a1">
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+    <parameter name="id" class="java.lang.Long"/>
+    <queryString>
+        <![CDATA[
+SELECT u.username,
+       AVG(ge.grade) AS average,
+       (SELECT AVG(ge2.grade)
+        FROM grades_entity ge2
+        INNER JOIN users u2 ON u2.id = ge2.user_id
+        INNER JOIN users_roles ur2 ON ur2.user_entity_id = u2.id
+        INNER JOIN roles r2 ON r2.id = ur2.roles_id
+        WHERE r2.name NOT IN ('RECTOR')) AS totalAverage
+FROM users u
+INNER JOIN users_roles ur ON ur.user_entity_id = u.id
+INNER JOIN roles r ON r.id = ur.roles_id
+INNER JOIN grades_entity ge ON ge.user_id = u.id
+WHERE r.name NOT IN ('RECTOR')
+GROUP BY u.username;]]>
+    </queryString>
+    <field name="username" class="java.lang.String"/>
+    <field name="average" class="java.lang.Double"/>
+    <field name="totalAverage" class="java.lang.Double"/>
+    <group name="Group1">
+        <groupHeader>
+            <band height="37">
+                <line>
+                    <reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="7851b388-d1b4-4a17-b5ad-695ed2025cce"/>
+                </line>
+            </band>
+        </groupHeader>
+    </group>
+    <group name="Group2">
+        <groupHeader>
+            <band height="72">
+                <staticText>
+                    <reportElement mode="Opaque" x="207" y="20" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="c20b1a55-f1e3-4552-bb42-092970c62871"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <text><![CDATA[Promedio]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement mode="Opaque" x="-2" y="20" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="877bb4a3-e9eb-4bcb-b652-217a4e8b6f0d"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <text><![CDATA[Estudiante]]></text>
+                </staticText>
+            </band>
+        </groupHeader>
+    </group>
+    <group name="Group3"/>
+    <group name="Group4"/>
+    <background>
+        <band/>
+    </background>
+    <title>
+        <band height="72">
+            <frame>
+                <reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="41abf827-b61e-4531-89ae-a22f0ebb88ab"/>
+                <staticText>
+                    <reportElement x="20" y="20" width="515" height="60" forecolor="#FFFFFF" uuid="034ad415-afd4-4744-b967-cbbccd2e3bc5"/>
+                    <textElement>
+                        <font size="34" isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[Reporte global calificaciones]]></text>
+                </staticText>
+            </frame>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="13"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="21">
+            <line>
+                <reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="b013a797-3b21-4da2-a39a-23674d76afd7"/>
+            </line>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="59">
+            <textField>
+                <reportElement stretchType="RelativeToBandHeight" x="-10" y="0" width="179" height="32" uuid="eddf8ac6-ad74-4361-b5d6-2de97b61e17f"/>
+                <textElement>
+                    <font size="18"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00#;(#,##0.00#-)">
+                <reportElement x="207" y="0" width="100" height="20" uuid="6c5cc024-53a0-45d1-8631-006ada0a6b7b"/>
+                <textFieldExpression><![CDATA[$F{average}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="62">
+            <textField>
+                <reportElement mode="Opaque" x="0" y="44" width="515" height="13" backcolor="#E6E6E6" uuid="65302563-a6f4-4c29-9048-052fff77a7d1"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement mode="Opaque" x="520" y="44" width="40" height="13" backcolor="#E6E6E6" uuid="6cfa4cf1-673b-4363-8528-b656b906b60c"/>
+                <textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField pattern="EEEEE dd MMMMM yyyy">
+                <reportElement x="0" y="44" width="100" height="13" uuid="504089fe-66cc-4284-a5e6-c137895e545e"/>
+                <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement mode="Opaque" x="0" y="12" width="100" height="18" forecolor="#666666" backcolor="#E6E6E6" uuid="ee6f495d-3f49-45b6-b427-4c42fa7f5b6d"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Promedio Total]]></text>
+            </staticText>
+            <textField pattern="#,##0.00#;(#,##0.00#-)">
+                <reportElement x="200" y="11" width="100" height="20" uuid="f5740275-1b7d-4991-bb17-11b76e532b1c"/>
+                <textFieldExpression><![CDATA[$F{totalAverage}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+    <summary>
+        <band/>
+    </summary>
+</jasperReport>
