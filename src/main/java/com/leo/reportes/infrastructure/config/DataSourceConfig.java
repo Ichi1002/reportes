@@ -1,5 +1,6 @@
 package com.leo.reportes.infrastructure.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -11,12 +12,16 @@ import java.sql.SQLException;
 
 @Component
 public class DataSourceConfig {
-    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String USER = "postgres";
-    private static final String PASS = "";
-    private static final String DRIVER = "org.postgresql.Driver";
+    @Value("${spring.datasource.url}")
+    private String URL;
+    @Value("${spring.datasource.username}")
+    private String USER;
+    @Value("${spring.datasource.password}")
+    private String PASS;
+    @Value("${spring.datasource.driver}")
+    private String DRIVER ;
     @Bean
-    public static Connection connection() {
+    public Connection connection() {
         Connection connection = null;
         try {
             Class.forName(DRIVER);
