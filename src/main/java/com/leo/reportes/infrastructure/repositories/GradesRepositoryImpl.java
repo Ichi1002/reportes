@@ -10,11 +10,14 @@ import com.leo.reportes.infrastructure.models.UserEntity;
 import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,15 +58,17 @@ public class GradesRepositoryImpl implements GradesRepository {
     public JasperPrint generateReport(long id) {
         Map<String, Object> empParams = new HashMap<String, Object>();
         empParams.put("id", id);
-        try {
-            File file = ResourceUtils.getFile("classpath:studentReport.jrxml");
-            JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        ClassPathResource resource = new ClassPathResource("studentReport.jrxml");
+        try (InputStream inputStream = resource.getInputStream()) {
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
             return JasperFillManager.fillReport(jasperReport, empParams
                     ,connection);
 
-        } catch (FileNotFoundException | JRException e) {
+        } catch (JRException | IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @Override
@@ -83,13 +88,14 @@ public class GradesRepositoryImpl implements GradesRepository {
     public JasperPrint generateGlobalReport() {
         Map<String, Object> empParams = new HashMap<String, Object>();
 
-        try {
-            File file = ResourceUtils.getFile("classpath:globalReport.jrxml");
-            JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        ClassPathResource resource = new ClassPathResource("globalReport.jrxml");
+        try (InputStream inputStream = resource.getInputStream()) {
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
             return JasperFillManager.fillReport(jasperReport, empParams
                     ,connection);
 
-        } catch (FileNotFoundException | JRException e) {
+        } catch (JRException | IOException e) {
             throw new RuntimeException(e);
         }
     }
