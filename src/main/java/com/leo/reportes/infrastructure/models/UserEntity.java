@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "ID")
         private long id;
-        //todo añadir propiedad unique
+
         private String username;
         @JsonIgnore
         private String password;
@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
         public User toEntity(){
             return User.builder()
+                    .id(this.id)
                     .username(this.username)
                     .rol(this.roles.stream().map(RoleEntity::toDomain).collect(Collectors.toSet()))
                     .build();

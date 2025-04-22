@@ -25,10 +25,10 @@ public class RectorUsecase implements RectorGateway {
 
 
     @Override
-    public List<String> getAllStudents() {
+    public List<User> getAllStudents() {
         return userRepository.findAllStudents(2)
                 .stream()
-                .map(UserEntity::getUsername)
+                .map(UserEntity::toEntity)
                 .collect(Collectors.toList());
     }
 

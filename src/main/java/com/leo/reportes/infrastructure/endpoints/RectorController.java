@@ -22,7 +22,7 @@ public class RectorController {
     private final RectorGateway rectorGateway;
     @PreAuthorize("hasAuthority('RECTOR')")
     @GetMapping("/students")
-    public ResponseEntity<List<String>> getAllStudents(){
+    public ResponseEntity<List<User>> getAllStudents(){
         return new ResponseEntity<>(rectorGateway.getAllStudents(),HttpStatus.OK);
     }
 

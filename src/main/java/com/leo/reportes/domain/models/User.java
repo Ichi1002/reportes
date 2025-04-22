@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 public class User {
+    private long id;
     private String username;
     private List<Grade> report;
     @JsonIgnore

@@ -6,7 +6,7 @@ import com.leo.reportes.infrastructure.models.UserEntity;
 import java.util.List;
 
 public interface RectorGateway {
-    List<String> getAllStudents();
+    List<User> getAllStudents();
     User addStudent(String studentName);
     List<User> getAllResults();
     byte[] generateGlobalReport();
